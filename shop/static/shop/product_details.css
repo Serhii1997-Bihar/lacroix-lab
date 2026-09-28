@@ -1,0 +1,66 @@
+@media (min-width: 908px) {
+  .container-fluid {
+    max-height: 650px;
+  }
+
+  .content {
+    display: flex;
+    align-items: center;
+  }
+
+  .content img {
+    height: 600px;
+    object-fit: contain;
+  }
+}
+
+.detail-card {
+  padding: 2%;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(8px) !important;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 907px) {
+  .content {
+    display: flex;
+    align-items: center;
+  }
+
+  .content img {
+    object-fit: contain;
+  }
+
+  .content video {
+    object-fit: contain;
+  }
+
+  .modal-img {
+    max-width: 100%;
+    object-fit: contain;
+    height: auto;
+  }
+
+  .info {
+    font-size: 15px;
+  }
+}
+
+#alert-box {
+  width: 20%;
+  position: fixed;
+  text-align: center;
+  color: white;
+  background-color: rgba(255, 192, 203, 0.95);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+
+
+
+

@@ -1,0 +1,24 @@
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+chromedriver-win64
+
+# IDE specific files
+.idea/
+.vscode/
+
+# Log files
+*.log
+*.pid
+
+# Coverage and testing
+.coverage
+.tox/
+.nox/
+.hypothesis/
+
+products
+users_images
+.env

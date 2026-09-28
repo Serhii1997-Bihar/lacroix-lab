@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} {{ product.name }} {% endblock %}
+{% block link %}<link href="{% static 'product_details.css' %}" rel="stylesheet">{% endblock %}
+{% block content %}
+<div class="container-fluid d-flex justify-content-center">
+    <div class="container" style="text-align: center;">
+        <h2 class="text-center">
+            <a href="{% url 'product_details' product.id %}" style="text-decoration: none; color: white;">{{ product.name }}</a>
+        </h2>
+        <div class="detail-card mb-3" style="max-width: 1000px; height: auto; backdrop-filter: blur(25px); border-radius: 5px;">
+            <div class="row g-0" style="align-items: center;">
+                <div class="col-md-4 d-flex p-3" style="align-items: center;">
+                    <a class="image" data-bs-toggle="modal" data-bs-target="#imageModal">
+                        <img id="productImage" src="{{ product.image.url }}" style="cursor: pointer; width: 100%;
+                        object-fit: contain; border-radius: 5px;">
+                    </a>
+                </div>
+
+                <div class="col-md-8 py-4 container">
+                    <div class="card-body text-white">
+                        <h3>Category: <a href="{% url 'categories' product.category.id %}" style="color: white; text-decoration: none;">{{ product.category }}</a></h3>
+                        <p style="">{{ product.country }},
+                            <a href="{% url 'brands' product.brand.id %}" style="color: white; text-decoration: none;">{{ product.brand }}</a></p>
+                        <p style="line-height: 35px;">{{ product.about }}</p>
+                        <div class="d-flex align-items-stretch" style="justify-content: space-between;">
+                            <div class="d-grid" style="flex: 1; text-align: center;">
+                                <p>Sizes: {% for el in sizes %} {{ el.size }} {% endfor %}</p>
+                                <p>Date: {{ product.date|date:"d.m.Y" }}</p>
+                                <h4 style="color: white;">Price: {{ product.price }} $</h4>
+                            </div>
+                            <div class="d-flex align-items-center" style="flex: 1; justify-content: center;">
+                                <form action="{% url 'add_product' product.id %}" method="post" style="text-align: center;">
+                                    <p style="color: white;">{{ form.size }}</p>
+                                    <p style="color: white;">{{ form.quantity }}</p>
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger text-white" style="width: 150px;">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.0);">
+                <div class="d-flex justify-content-center" style="width: 100%; height: 100vh; position: relative;">
+                    <img class="modal-img" id="modalImage" src="" alt="Product Image" style="width: auto;
+                    height: 100%; max-height: 100vh; object-fit: contain;">
+                    <span class="close" data-bs-dismiss="modal" style="position: absolute; z-index: 1000; color: white;
+                     font-size: 200%; cursor: pointer;">&times;</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    {% if messages %}
+        <div id="alert-box" class="alert alert-success" style="display: none;">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div><br><br><br><br>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imageLink = document.querySelector('.image');
+        const modalImage = document.getElementById('modalImage');
+
+        imageLink.addEventListener('click', function () {
+            modalImage.src = this.querySelector('img').src;
+        });
+    });
+</script>
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const videoLinks = document.querySelectorAll('.video');
+    const modalVideo = document.getElementById('modalVideo');
+    const videoModal = document.getElementById('videoModal');
+
+    videoLinks.forEach(videoLink => {
+        videoLink.addEventListener('click', function () {
+            modalVideo.src = this.querySelector('video').src; // Встановлюємо src модального відео
+            modalVideo.play(); // Запускаємо відео автоматично при відкритті
+        });
+    });
+
+    videoModal.addEventListener('hidden.bs.modal', function () {
+        modalVideo.pause(); // Зупиняємо відео при закритті модального вікна
+        modalVideo.currentTime = 0; // Скидаємо час відтворення
+    });
+});
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var alertBox = document.getElementById('alert-box');
+        if (alertBox) {
+            alertBox.style.display = 'block'; // Показуємо повідомлення
+            setTimeout(function() {
+                alertBox.style.display = 'none'; // Сховаємо через 2 секунди
+            }, 2000);
+        }
+    });
+</script>
+{% endblock %}

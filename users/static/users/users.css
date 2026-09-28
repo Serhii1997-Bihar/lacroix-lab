@@ -1,0 +1,19 @@
+.image, .video {cursor: pointer!important;}
+
+
+@media (min-width: 990px)
+{.frame {display: flex;} .left-content {width: 50%}}
+
+
+@media (max-width: 200px){
+.frame {display: grid;}
+.right-content img,
+.right video {max-width: 100%; height: auto;}
+.left-content {width: 100%}
+}
+
+
+.paginator {display: flex; margin-top: 20px; justify-content: center;}
+.paginator a {text-decoration: none;}
+
+

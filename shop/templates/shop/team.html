@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Admins {% endblock %}
+{% block link %}<link href="{% static 'team.css' %}" rel="stylesheet">{% endblock %}
+{% block content %}
+<div class="container mt-3" style="ackground-color: rgba(0, 0, 0, 0.1); backdrop-filter: blur(8px);">
+    <div id="carouselExampleControls" class="carousel slide" data-interval="0">
+        <div class="carousel-inner">
+            {% for admin in admins %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="d-flex align-items-center justify-content-center">
+                            <div style="color: white; text-align: center;" class="information">
+                                <h1>{{ admin.name }}</h1>
+                                <br>
+                                <h3>{{ admin.skills }}</h3>
+                                <h5>{{ admin.achievement }}</h5>
+                                <br>
+                                <h5>{{ admin.experience }}</h5>
+                            </div>
+                            {% if admin.image %}
+                            <a class="image px-5" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                <img src="{{ admin.image.url }}" style="height: 550px; width: auto; object-fit: contain;
+                                " class="admin-photo">
+                            </a>
+                            {% else %}
+                            <a class="image px-5" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                <img src="{% static 'unknown.jpg' %}" style="height: 670px; width: auto; object-fit: contain;
+                                " class="admin-photo">
+                            </a>
+                            {% endif %}
+                            <div style="color: white; line-height: 35px;" class="information">
+                                <p>{{ admin.bio }}</p>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+        </div>
+        <div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="prev" style="width: 5%;">
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                    data-bs-slide="next" style="width: 5%;">
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const carouselInner = document.querySelector('.carousel-inner');
+    const modalImage = document.getElementById('modalImage');
+
+    carouselInner.addEventListener('click', function (event) {
+        const imageLink = event.target.closest('.image');
+        if (imageLink) {
+            modalImage.src = imageLink.querySelector('img').src;
+        }
+    });
+});
+
+</script>
+{% endblock %}
